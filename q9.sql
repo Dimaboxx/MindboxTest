@@ -30,7 +30,7 @@ create table [dbo].[ProductCategory]
 )
 
 
-insert into Products (ProductName) Values (N'Продукт 1'),(N'Продукт 2'),(N'Продукт 3')
+insert into Products (ProductName) Values (N'Продукт 1'),(N'Продукт 2'),(N'Продукт 3'),(N'Продукт 4')
 select * from dbo.Products
 
 insert into Category(CategoryName) Values (N'Категория 1'),(N'Категория 2'),(N'Категория 3')
@@ -42,7 +42,7 @@ select * from dbo.ProductCategory
 
 select 
 	p.ProductName,
-	c.CategoryName 
+	pc2.CategoryName 
 from dbo.Products as p 
-	join ProductCategory as pc on p.Id = pc.ProductId 
-	join Category as c on pc.CategoryId = c.Id
+	left outer join (select pc.ProductId, c.CategoryName from ProductCategory as pc  
+	join Category as c on pc.CategoryId = c.Id) as pc2 on p.Id = pc2.ProductId
